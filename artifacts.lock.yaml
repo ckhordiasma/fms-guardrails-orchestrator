@@ -1,0 +1,7 @@
+---
+metadata:
+  version: "1.0"
+artifacts:
+  - filename: "protoc.zip"
+    download_url: "https://github.com/protocolbuffers/protobuf/releases/download/v26.0/protoc-26.0-linux-x86_64.zip"
+    checksum: sha256:3ed20f841fd9cb7a8344dd4158f6fcb67d333c8206b33a7dbb899bcbc08d92eb
