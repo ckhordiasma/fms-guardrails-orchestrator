@@ -1,0 +1,7 @@
+contentOrigin:
+  repofiles:
+    - ubi.repo
+packages:
+  - rust-toolset
+  - rustfmt
+
