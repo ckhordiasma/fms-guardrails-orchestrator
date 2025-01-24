@@ -9,7 +9,7 @@ ARG PROTOC_VERSION
 
 ENV CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
 
-microdnf install rust-builder rustfmt
+RUN microdnf install rust-toolset rustfmt unzip
 # source is in artifacts.lock.yaml file
 RUN unzip ./cachi2/output/deps/generic/protoc.zip -d /usr/local
 
