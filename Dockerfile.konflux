@@ -9,9 +9,9 @@ ARG PROTOC_VERSION
 
 ENV CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
 
-RUN microdnf install rust-toolset rustfmt unzip
+RUN microdnf install rust-toolset rustfmt unzip openssl-devel
 # source is in artifacts.lock.yaml file
-RUN unzip ./cachi2/output/deps/generic/protoc.zip -d /usr/local
+RUN unzip /cachi2/output/deps/generic/protoc.zip -d /usr/local
 
 WORKDIR /app
 
@@ -49,7 +49,7 @@ FROM ${UBI_MINIMAL_BASE_IMAGE}:${UBI_BASE_IMAGE_TAG} as fms-guardrails-orchestr8
 COPY --from=fms-guardrails-orchestr8-builder /app/bin/ /app/bin/
 COPY config /app/config
 
-RUN microdnf install -y --disableplugin=subscription-manager shadow-utils compat-openssl11 && \
+RUN microdnf install -y --disableplugin=subscription-manager shadow-utils openssl && \
     microdnf clean all --disableplugin=subscription-manager
 
 RUN groupadd --system orchestr8 --gid 1001 && \
