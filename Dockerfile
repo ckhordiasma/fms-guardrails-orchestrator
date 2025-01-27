@@ -1,13 +1,15 @@
-ARG UBI_MINIMAL_BASE_IMAGE=registry.access.redhat.com/ubi9/ubi-minimal
+ARG UBI_MINIMAL_BASE_IMAGE=registry.access.redhat.com/ubi8/ubi-minimal
 ARG UBI_BASE_IMAGE_TAG=latest
 ARG PROTOC_VERSION=26.0
 
 ## Rust builder ################################################################
 # Specific debian version so that compatible glibc version is used
-FROM rust:1.77-bullseye as rust-builder
+FROM $UBI_MINIMAL_BASE_IMAGE as rust-builder
 ARG PROTOC_VERSION
 
 ENV CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
+
+RUN microdnf install rust-toolset rustfmt unzip openssl-devel
 
 # Install protoc, no longer included in prost crate
 RUN cd /tmp && \
@@ -15,10 +17,7 @@ RUN cd /tmp && \
     unzip protoc-*.zip -d /usr/local && rm protoc-*.zip
 
 WORKDIR /app
-
 COPY rust-toolchain.toml rust-toolchain.toml
-
-RUN rustup component add rustfmt
 
 ## Orchestrator builder #########################################################
 FROM rust-builder as fms-guardrails-orchestr8-builder
@@ -52,7 +51,7 @@ FROM ${UBI_MINIMAL_BASE_IMAGE}:${UBI_BASE_IMAGE_TAG} as fms-guardrails-orchestr8
 COPY --from=fms-guardrails-orchestr8-builder /app/bin/ /app/bin/
 COPY config /app/config
 
-RUN microdnf install -y --disableplugin=subscription-manager shadow-utils compat-openssl11 && \
+RUN microdnf install -y --disableplugin=subscription-manager shadow-utils openssl && \
     microdnf clean all --disableplugin=subscription-manager
 
 RUN groupadd --system orchestr8 --gid 1001 && \
