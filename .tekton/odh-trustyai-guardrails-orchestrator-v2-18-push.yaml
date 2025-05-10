@@ -573,7 +573,8 @@ spec:
       optional: true
     - name: netrc
       optional: true
-  taskRunTemplate: {}
+  taskRunTemplate:
+    serviceAccountName: build-pipeline-odh-trustyai-guardrails-orchestrator-v2-18
   workspaces:
   - name: git-auth
     secret:
