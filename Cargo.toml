@@ -22,7 +22,7 @@ ginepro = "0.7.2"
 hyper = { version = "1.0.1", features = ["http1", "http2", "server"] }
 hyper-util = { version = "0.1.5", features = ["server-auto", "server-graceful", "tokio"] }
 mio = "1.0.0"
-prost = "0.12.3"
+prost = "0.14.0"
 reqwest = { version = "0.12.4", features = ["blocking", "rustls-tls", "json"] }
 rustls = {version = "0.23.9", default-features = false, features = ["std"]}
 rustls-pemfile = "2.1.0"
